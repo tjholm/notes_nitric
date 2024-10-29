@@ -1,6 +1,8 @@
 name: notes-api
+preview:
+  - sql-databases
 services:
-    - basedir: ""
-      match: services/*.dart
-      start: dart run --observe $SERVICE_PATH
+  - basedir: ""
+    match: services/*.dart
+    start: dart run --observe $SERVICE_PATH
 batch-services: []

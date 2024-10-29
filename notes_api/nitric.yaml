@@ -1,0 +1,6 @@
+name: notes-api
+services:
+    - basedir: ""
+      match: services/*.dart
+      start: dart run --observe $SERVICE_PATH
+batch-services: []

@@ -70,7 +70,14 @@ class SQLQueryBuilder {
     return this;
   }
 
-  // INSERT clause
+  ///  Construct a SQL INSERT statement for the specified table and values.
+  ///
+  ///  ```dart
+  ///   final updateQuery = SQLQueryBuilder()
+  ///   ..insert('notes', note.toMap())
+  ///
+  ///   await updateQuery.execute(connection);
+  /// ```
   SQLQueryBuilder insert(String table, Map<String, dynamic> values) {
     final columns = values.keys.join(', ');
     final paramKeys = values.keys.map((key) {
@@ -86,7 +93,13 @@ class SQLQueryBuilder {
     return this;
   }
 
-  // UPDATE clause
+  ///
+  ///  ```dart
+  ///   final updateQuery = SQLQueryBuilder()
+  ///   ..update('notes', updatedNote.toMap())
+  ///   ..where('id = ', id);
+  ///   await updateQuery.execute(connection);
+  /// ```
   SQLQueryBuilder update(String table, Map<String, dynamic> values) {
     final updateValues = values.entries.map((entry) {
       final paramKey = '@p$_paramIndex';
@@ -99,7 +112,23 @@ class SQLQueryBuilder {
     return this;
   }
 
-  // DELETE clause
+  /// Appends a DELETE FROM statement for the specified table to the SQL query.
+  ///
+  /// This method constructs a SQL DELETE statement targeting the provided
+  /// table name and appends it to the internal query buffer.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// SQLQueryBuilder builder = SQLQueryBuilder();
+  /// builder..deleteFrom('users')..where('id =', id);
+  /// await query.execute(connection);
+  /// ```
+  ///
+  /// Returns:
+  /// - The current instance of [SQLQueryBuilder] to allow for method chaining.
+  ///
+  /// Parameters:
+  /// - `table`: The name of the table from which to delete records.
   SQLQueryBuilder deleteFrom(String table) {
     _query.write('DELETE FROM $table ');
     return this;

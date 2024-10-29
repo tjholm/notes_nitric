@@ -5,7 +5,6 @@ import '../models/note.dart';
 import '../resources/db.dart';
 
 void main() async {
-  final queryBuilder = SQLQueryBuilder();
   final connection = await getConnection();
 
   final helloApi = Nitric.api("main");

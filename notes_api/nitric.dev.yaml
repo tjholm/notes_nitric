@@ -1,0 +1,5 @@
+# The nitric provider to use
+provider: nitric/aws@1.14.0
+
+region: us-east-1
+profile: freelance

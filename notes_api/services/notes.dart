@@ -14,7 +14,7 @@ void main() async {
       ..select(['id', 'title', 'content'])
       ..from('notes');
 
-    final rows = await query.execute(connection);
+    final rows = await query.execute(connection!);
 
     final notes = rows.map((row) => Note.fromMap(row.toColumnMap())).toList();
 
@@ -27,7 +27,7 @@ void main() async {
     final newNote = CreateNoteBody.fromMap(ctx.req.json());
 
     final query = SQLQueryBuilder()..insert('notes', newNote.toMap());
-    final rows = await query.execute(connection);
+    final rows = await query.execute(connection!);
 
     final notes = rows.map((row) => Note.fromMap(row.toColumnMap())).toList();
 
@@ -50,14 +50,14 @@ void main() async {
     final updateQuery = SQLQueryBuilder()
       ..update('notes', updatedNote.toMap())
       ..where('id = ', id);
-    await updateQuery.execute(connection);
+    await updateQuery.execute(connection!);
 
     final selectQuery = SQLQueryBuilder()
       ..select(['id', 'title', 'content'])
       ..from('notes')
       ..where('id =', id);
 
-    final rows = await selectQuery.execute(connection);
+    final rows = await selectQuery.execute(connection!);
 
     final notes = rows.map((row) => Note.fromMap(row.toColumnMap())).toList();
 
@@ -78,7 +78,7 @@ void main() async {
     final query = SQLQueryBuilder()
       ..deleteFrom('notes')
       ..where('id =', id);
-    await query.execute(connection);
+    await query.execute(connection!);
 
     ctx.res.status = 204;
 

@@ -1,15 +1,23 @@
 import 'package:nitric_sdk/nitric.dart';
 import 'package:nitric_sdk/src/api/sql.dart';
 import 'package:postgres/postgres.dart';
+import 'dart:io';
 
 SqlDatabase get db => Nitric.sql(
       'notes',
-      migrations: "file://db/migrations/notes",
+      migrations: "file://migrations/notes",
     );
 
-Future<Connection> getConnection() async {
-  final uri = Uri.parse(await db.connectionString());
+Future<Connection?> getConnection() async {
+  final nitricEnv = Platform.environment['NITRIC_ENVIRONMENT'];
+  final dbRef = db;
 
+  if (nitricEnv == "build") {
+    print('Skipping connection during nitric build');
+    return null;
+  }
+
+  final uri = Uri.parse(await dbRef.connectionString());
   final userInfoParts = uri.userInfo.split(':');
   final username = userInfoParts.length == 2 ? userInfoParts[0] : null;
   final password = userInfoParts.length == 2 ? userInfoParts[1] : null;
